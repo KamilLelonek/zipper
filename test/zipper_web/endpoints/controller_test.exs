@@ -24,6 +24,14 @@ defmodule ZipperWeb.Endpoints.ControllerTest do
       %{
         "endpoints" => "#{url()}/",
         "method" => "get"
+      },
+      %{
+        "archives" => "#{url()}/archives/:name",
+        "method" => "get"
+      },
+      %{
+        "archives" => "#{url()}/archives",
+        "method" => "post"
       }
     ]
   end

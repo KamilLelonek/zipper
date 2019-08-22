@@ -8,9 +8,14 @@ defmodule ZipperWeb.Router do
     plug :accepts, ["json"]
   end
 
-  get("/", EndpointsController, :index, as: :endpoints)
+  get "/", EndpointsController, :index, as: :endpoints
 
   scope "/", ZipperWeb do
     pipe_through :api
+
+    scope "/archives", Archives do
+      post "/", Controller, :upload, as: :archives
+      get "/:name", Controller, :download, as: :archives
+    end
   end
 end
