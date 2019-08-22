@@ -1,6 +1,8 @@
 defmodule ZipperWeb.Errors.View do
   use ZipperWeb.View
 
+  def render("errors.json", %{errors: errors}), do: errors
+
   def template_not_found(template, _assigns) do
     %{
       errors: %{
