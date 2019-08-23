@@ -33,6 +33,7 @@ defmodule Zipper.MixProject do
       {:postgrex, "~> 0.15"},
       {:jason, "~> 1.1"},
       {:plug_cowboy, "~> 2.1"},
+      {:httpoison, "~> 1.4"},
       {:credo, "~> 1.1", only: [:dev, :test], runtime: false},
       {:ex_machina, "~> 2.3", only: :test}
     ]
