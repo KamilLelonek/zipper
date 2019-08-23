@@ -7,6 +7,7 @@ defmodule Zipper.Application do
   defp children do
     [
       Zipper.Domain.Repo,
+      Zipper.Domain.Processor,
       ZipperWeb.Endpoint
     ]
   end
