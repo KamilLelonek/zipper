@@ -1,7 +1,7 @@
 defmodule Zipper.Domain.Processor do
   use GenServer
 
-  alias Zipper.Domain.HttpStream
+  alias Zipper.Domain.{HttpStream, Agent}
 
   def start_link(_),
     do: GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
@@ -20,13 +20,8 @@ defmodule Zipper.Domain.Processor do
     |> into_archive(archive_name)
     |> Stream.run()
 
-    send(self(), :zipped)
+    Agent.mark_finished(archive_name)
 
-    {:noreply, state}
-  end
-
-  @impl true
-  def handle_info(:zipped, state) do
     {:noreply, state}
   end
 
