@@ -17,9 +17,16 @@ defmodule Zipper.Domain.Processor do
     files
     |> entries()
     |> Zstream.zip()
-    |> Stream.into(archive_stream(archive_name))
+    |> into_archive(archive_name)
     |> Stream.run()
 
+    send(self(), :zipped)
+
+    {:noreply, state}
+  end
+
+  @impl true
+  def handle_info(:zipped, state) do
     {:noreply, state}
   end
 
@@ -28,7 +35,10 @@ defmodule Zipper.Domain.Processor do
   defp entry(%{"url" => url, "filename" => filename}),
     do: Zstream.entry(filename, HttpStream.get(url))
 
-  defp archive_stream(archive_name), do: File.stream!(archive_name)
+  defp into_archive(stream, archive_name) do
+    archive = File.stream!(archive_name)
+    Stream.into(stream, archive)
+  end
 
   # ALTERNATIVE SOLUTION:
   #
