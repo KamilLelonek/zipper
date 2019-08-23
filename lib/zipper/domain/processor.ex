@@ -9,11 +9,11 @@ defmodule Zipper.Domain.Processor do
   @impl true
   def init(state), do: {:ok, state}
 
-  def download(files, archive_name),
-    do: GenServer.cast(__MODULE__, {:download, files, archive_name})
+  def create_archive(files, archive_name),
+    do: GenServer.cast(__MODULE__, {:create_archive, files, archive_name})
 
   @impl true
-  def handle_cast({:download, files, archive_name}, state) do
+  def handle_cast({:create_archive, files, archive_name}, state) do
     files
     |> entries()
     |> Zstream.zip()
