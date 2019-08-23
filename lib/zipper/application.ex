@@ -8,6 +8,7 @@ defmodule Zipper.Application do
     [
       Zipper.Domain.Repo,
       Zipper.Domain.Processor,
+      Zipper.Domain.Agent,
       ZipperWeb.Endpoint
     ]
   end
