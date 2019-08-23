@@ -35,7 +35,8 @@ defmodule Zipper.MixProject do
       {:plug_cowboy, "~> 2.1"},
       {:httpoison, "~> 1.4"},
       {:credo, "~> 1.1", only: [:dev, :test], runtime: false},
-      {:ex_machina, "~> 2.3", only: :test}
+      {:ex_machina, "~> 2.3", only: :test},
+      {:zstream, "~> 0.2"}
     ]
   end
 
