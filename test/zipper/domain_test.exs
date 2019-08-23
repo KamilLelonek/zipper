@@ -4,7 +4,7 @@ defmodule Zipper.DomainTest do
   alias Zipper.Domain
   alias Zipper.Domain.Agent
 
-  @archive_name "archive"
+  @archive_name "archive.zip"
 
   setup do
     Agent.invalidate()
@@ -40,11 +40,16 @@ defmodule Zipper.DomainTest do
     end
   end
 
-  # def can_download?(archive_name) do
-  #   cond do
-  #     not Agent.status(archive_name) -> {:error, :not_ready}
-  #     File.exists?(archive_name) -> {:ok, archive_name}
-  #     true -> {:error, :not_found}
-  #   end
-  # end
+  describe "create_archive/1" do
+    test "should schedule downloading" do
+      archive_name =
+        :files
+        |> read_fixture("valid")
+        |> Domain.create_archive()
+
+      assert false == Agent.status(archive_name)
+
+      File.rm(archive_name)
+    end
+  end
 end
