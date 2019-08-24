@@ -53,8 +53,7 @@ defmodule Zipper.DomainTest do
                       {:"$gen_cast", {:create_archive, [], ^archive_name}}}
 
       assert %{} == :sys.get_state(pid)
-
-      File.rm(archive_name)
+      assert :ok = File.rm(archive_name)
     end
   end
 end
