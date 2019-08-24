@@ -36,6 +36,7 @@ defmodule Zipper.MixProject do
       {:httpoison, "~> 1.4"},
       {:credo, "~> 1.1", only: [:dev, :test], runtime: false},
       {:ex_machina, "~> 2.3", only: :test},
+      {:bypass, "~> 1.0", only: :test},
       {:zstream, "~> 0.2"}
     ]
   end
