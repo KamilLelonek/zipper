@@ -17,9 +17,10 @@ defmodule ZipperWeb.Archives.ControllerTest do
     test "should upload a valid JSON", %{conn: conn} do
       files = read_fixture(:files, "valid")
 
-      assert conn
-             |> post(Routes.archives_path(conn, :upload), _json: files)
-             |> response(:accepted)
+      assert %{"archive_name" => archive_name} =
+               conn
+               |> post(Routes.archives_path(conn, :upload), _json: files)
+               |> json_response(:accepted)
     end
 
     test "should not upload an invalid JSON", %{conn: conn} do

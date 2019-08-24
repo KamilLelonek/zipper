@@ -10,9 +10,11 @@ defmodule ZipperWeb.Archives.Controller do
   # NOTE: assumes transactional insertion
   def upload(conn, params) do
     with %{"_json" => files} <- params,
-         {:ok, files} <- Form.new(files) do
-      # Domain.create_archive(files)
-      send_resp(conn, :accepted, "")
+         {:ok, files} <- Form.new(files),
+         archive_name <- Domain.create_archive(files) do
+      conn
+      |> put_status(:accepted)
+      |> json(%{archive_name: archive_name})
     else
       {:error, errors} ->
         conn
