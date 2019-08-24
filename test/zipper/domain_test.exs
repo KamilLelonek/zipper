@@ -2,7 +2,7 @@ defmodule Zipper.DomainTest do
   use Zipper.TestCase, async: true
 
   alias Zipper.Domain
-  alias Zipper.Domain.Agent
+  alias Zipper.Domain.{Agent, Processor}
 
   @archive_name "archive.zip"
 
@@ -42,12 +42,17 @@ defmodule Zipper.DomainTest do
 
   describe "create_archive/1" do
     test "should schedule downloading" do
-      archive_name =
-        :files
-        |> read_fixture("valid")
-        |> Domain.create_archive()
+      pid = GenServer.whereis(Processor)
+      :erlang.trace(pid, true, [:receive])
+
+      archive_name = Domain.create_archive([])
 
       assert false == Agent.status(archive_name)
+
+      assert_receive {:trace, ^pid, :receive,
+                      {:"$gen_cast", {:create_archive, [], ^archive_name}}}
+
+      assert %{} == :sys.get_state(pid)
 
       File.rm(archive_name)
     end
