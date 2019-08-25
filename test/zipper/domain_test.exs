@@ -55,5 +55,18 @@ defmodule Zipper.DomainTest do
       assert %{} == :sys.get_state(pid)
       assert :ok = File.rm(archive_name)
     end
+
+    test "should not schedule downloading when the file already exists" do
+      archive_name = Domain.create_archive([])
+
+      pid = GenServer.whereis(Processor)
+      :erlang.trace(pid, true, [:receive])
+
+      refute_receive {:trace, ^pid, :receive,
+                      {:"$gen_cast", {:create_archive, [], ^archive_name}}}
+
+      :sys.get_state(pid)
+      File.rm(archive_name)
+    end
   end
 end
