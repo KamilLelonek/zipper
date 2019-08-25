@@ -3,22 +3,23 @@ defmodule Zipper.Domain.FilenameTest do
 
   alias Zipper.Domain.Filename
 
-  describe "generate/2" do
-    test "should generate a random filename" do
-      assert is_binary(Filename.generate())
+  @files [%{url: "localhost", filename: "filename"}]
+
+  describe "generate/1" do
+    test "should generate a filename based on files" do
+      assert is_binary(Filename.generate(@files))
     end
 
-    test "should generate a random filename with the given length" do
-      size = 8
-      extension = ".pdf"
+    test "should generate the same filename based on identical files" do
+      filename = Filename.generate(@files)
 
-      assert <<x::binary-size(size)>> <> ^extension = Filename.generate(extension, size)
+      assert ^filename = Filename.generate(@files)
     end
 
-    test "should generate a random filename with the given extension" do
-      extension = ".wtf"
-
-      assert Filename.generate(extension) =~ extension
+    test "should generate a filename with the zip extension" do
+      assert @files
+             |> Filename.generate()
+             |> String.ends_with?(".zip")
     end
   end
 end
