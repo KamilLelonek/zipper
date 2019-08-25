@@ -1,6 +1,8 @@
 defmodule Zipper.Domain do
   alias Zipper.Domain.{Processor, Filename, Agent}
 
+  # NOTE: consider configuring directory
+
   def create_archive(files) do
     with archive_name <- Filename.generate(files),
          :ok <- Agent.mark_started(archive_name) do
