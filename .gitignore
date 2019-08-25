@@ -21,3 +21,6 @@ erl_crash.dump
 
 # Ignore package tarball (built via "mix hex.build").
 zipper-*.tar
+
+# Skip checking-in created archives
+*.zip
