@@ -12,8 +12,8 @@ defmodule ZipperWeb.Archives.Form do
 
   embedded_schema do
     embeds_many :files, File, primary_key: false do
-      field :url, :string
-      field :filename, :string
+      field(:url, :string)
+      field(:filename, :string)
     end
   end
 
