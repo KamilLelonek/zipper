@@ -27,7 +27,7 @@ defmodule Zipper.Domain.Processor do
 
   defp entries(files), do: Enum.map(files, &entry/1)
 
-  defp entry(%{"url" => url, "filename" => filename}),
+  defp entry(%{url: url, filename: filename}),
     do: Zstream.entry(filename, HttpStream.get(url))
 
   defp into_archive(stream, archive_name) do

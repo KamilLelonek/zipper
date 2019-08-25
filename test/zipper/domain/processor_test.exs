@@ -35,8 +35,7 @@ defmodule Zipper.Domain.ProcessorTest do
       end)
 
       Processor.handle_cast(
-        {:create_archive,
-         [%{"url" => "http://localhost:#{bypass.port}/", "filename" => file_name}],
+        {:create_archive, [%{url: "http://localhost:#{bypass.port}/", filename: file_name}],
          @archive_name},
         []
       )
