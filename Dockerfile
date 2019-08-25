@@ -1,20 +1,19 @@
-###################
-# RELEASE BUILDER #
-###################
-FROM elixir:1.9-alpine AS builder
+# 1.9 version of Erlang-based Elixir installation: https://hub.docker.com/_/elixir/
+FROM elixir:1.9
 
-ENV MIX_ENV=prod
+# Create and set home directory
+ENV HOME /opt/your_application
+WORKDIR $HOME
 
-WORKDIR /opt/app
+# Configure required environment
+ENV MIX_ENV prod
 
-# Install required packages
-RUN apk add \
-  --update \
-  --no-cache \
-  alpine-sdk
+# Set and expose PORT environmental variable
+ENV PORT ${PORT:-4000}
+EXPOSE $PORT
 
 # Install hex (Elixir package manager)
-RUN mix local.hex --if-missing --force
+RUN mix local.hex --force
 
 # Install rebar (Erlang build tool)
 RUN mix local.rebar --force
@@ -34,25 +33,5 @@ COPY . .
 # Compile the entire project
 RUN mix compile
 
-# Build a release
-RUN mix release
-
-##################
-# RELEASE RUNNER #
-##################
-FROM alpine:3.9
-
-RUN apk add \
-  --update \
-  --no-cache \
-  bash openssl-dev postgresql-client
-
-WORKDIR /opt/app
-
-# Import the release binary
-COPY --from=builder /opt/app/_build/prod/rel/prod .
-
-# Expose Phoenix PORT variable
-EXPOSE 4444
-
-CMD ["/bin/sh", "-c", "./bin/prod start"]
+# Run Phoenix server as an initial command
+CMD ["/bin/sh", "-c", "mix phx.server"]

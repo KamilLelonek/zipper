@@ -1,15 +1,11 @@
 defmodule Zipper.TestCase do
   use ExUnit.CaseTemplate
 
-  alias Zipper.Domain.Repo
-  alias Ecto.Adapters.SQL.Sandbox
-
   using do
     quote do
       use Phoenix.ConnTest
 
       alias ZipperWeb.Router.Helpers, as: Routes
-      alias Zipper.Factory
 
       @endpoint ZipperWeb.Endpoint
 
@@ -17,13 +13,7 @@ defmodule Zipper.TestCase do
     end
   end
 
-  setup tags do
-    :ok = Sandbox.checkout(Repo)
-
-    unless tags[:async] do
-      Sandbox.mode(Repo, {:shared, self()})
-    end
-
+  setup do
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 

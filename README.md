@@ -78,16 +78,6 @@ Finally, you are able to build the project itself like:
 
     mix compile
 
-### Database
-
-Ensure you have `PostgreSQL` available on your machine. You can use either a [local installation](https://www.postgresql.org/download/) or a [Docker distribution](https://docs.docker.com/engine/examples/postgresql_service/).
-
-The application requires to have a user (role) `postgres` created with the same password on your `localhost` under `5432` port.
-
-Later on, create and migrate your database with
-
-    mix ecto.setup
-
 ### Server
 
 To start the application Phoenix server, run:
@@ -102,11 +92,11 @@ To prepare you application for production, you can use [`Dockerfile`](Dockerfile
 
 To build a `Docker` image, execute the following command:
 
-    docker build . -t car_pooling:latest
+    docker build . -t zipper:latest
 
 Once built, you are able to push it to a remote repository as:
 
-    docker push car_pooling:latest
+    docker push zipper:latest
 
 It assumes you are authorized and logged in to a [`Docker` registry](https://docs.docker.com/registry/).
 

@@ -9,7 +9,6 @@ defmodule Zipper.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
-      aliases: aliases(),
       deps: deps(),
       releases: releases()
     ]
@@ -29,7 +28,6 @@ defmodule Zipper.MixProject do
     [
       {:phoenix, "~> 1.4.9"},
       {:phoenix_ecto, "~> 4.0"},
-      {:ecto_sql, "~> 3.1"},
       {:postgrex, "~> 0.15"},
       {:jason, "~> 1.1"},
       {:plug_cowboy, "~> 2.1"},
@@ -38,12 +36,6 @@ defmodule Zipper.MixProject do
       {:ex_machina, "~> 2.3", only: :test},
       {:bypass, "~> 1.0", only: :test},
       {:zstream, "~> 0.2"}
-    ]
-  end
-
-  defp aliases do
-    [
-      test: ["cmd MIX_ENV=test ./scripts/db/reset.sh", "test"]
     ]
   end
 
